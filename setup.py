@@ -10,6 +10,8 @@ setup(
     description='a django issues',
     url='https://github.com/encorehu/django-issues',
     packages=find_packages(),
+    package_dir={'issues':'issues'},
+    package_data={'issues':['*.*','templates/issues/*.*']},
     zip_safe = False,
     include_package_data=True,
     classifiers=[
