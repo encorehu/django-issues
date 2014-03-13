@@ -121,6 +121,14 @@ class Project(models.Model):
     def project(self):
         return self
 
+    def percent_finished(self):
+        finished = self.issues.filter(finished=True).count()
+        allcount = self.issues.count()
+        if allcount>0:
+            return 100*float(finished)/allcount
+        else:
+            return 0.0
+
 class Membership(models.Model):
     user      = models.ForeignKey(User)
     project   = models.ForeignKey(Project)
@@ -132,6 +140,9 @@ signals.post_save.connect(timeline_updater, sender=Project)
 
 
 #__all__ = ('Issue', 'Urgency', 'Importance', 'STATUS_CHOICES',)
+
+#ISSUE_STATUS = _('new,wontfix,duplicate,accepted,inprogress,resolved,review,other')
+
 ISSUE_STATUS_CHOICES = (
     ('0', _('New')),
     ('1', _("Won't Fix")),
@@ -194,7 +205,6 @@ class Importance(models.Model):
 
 class Issue(models.Model):
 
-
     project       = models.ForeignKey(Project, related_name='issues', editable=False)
     summary       = models.CharField(max_length=255)
     description   = models.TextField()
@@ -204,7 +214,8 @@ class Issue(models.Model):
     milestone     = models.ForeignKey(Milestone, null=True, blank=True)
     creator       = models.ForeignKey(User, related_name="created_issues", editable=False)
     owners        = models.ManyToManyField(User, related_name="assigned_issues", null=True, blank=True)
-    status        = models.CharField(max_length=10) #, choices=ISSUE_STATUS_CHOICES, default='0')
+    status        = models.CharField(max_length=10, choices=ISSUE_STATUS_CHOICES, default='0')
+    finished      = models.BooleanField(default=False)
     priority      = models.IntegerField(_('priority'), choices=ISSUE_PRIORITIY_CHOICES, blank=True, null=True, default=2)
     order         = models.IntegerField(blank=True, null=True, default=0, editable=False)
 
