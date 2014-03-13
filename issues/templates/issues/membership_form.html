@@ -1,0 +1,13 @@
+{% extends 'issues/base_project.html' %}
+
+{% block content %}
+<h1>Add a member</h1>
+<form action="" method="post">{% csrf_token %}
+<dl>
+<dt>{{ form.user.label_tag }}</dt>
+{% if form.user.errors %}<dd>{{ form.user.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.user }}</dd>
+</dl>
+<input type="submit" value="Add Member" />
+</form>
+{% endblock content %}

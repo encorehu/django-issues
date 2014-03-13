@@ -1,0 +1,67 @@
+{% extends 'issues/base_project.html' %}
+{% block title %}{{ project }}{% endblock title %}
+
+{% block article_content %}
+	<h1>{{ project }}</h1>
+	<div id="newsLists">
+	    <p>{{ project.description }}</p>
+        <ul>
+        {% if project.url %}
+            <li>项目网址: <a href="{{ project.url }}">{{ project.url }}</a></li>
+        {% endif %}
+            <li><a href="{{ project.creator.get_absolute_url }}">{{ project.creator.username }}</a> 创建于 {{ project.date_added|date:"Y-m-d f" }}</li>
+        </ul>
+
+        <div id="issues">
+            <h2><a href="{% url 'issue_list' project.slug %}">问题/Bug报告</a> (<a href="{% url 'create_issue' project.slug %}">提交Issue</a>)</h2>
+            {% if project.issues.count %}
+            <ul>
+            {% for issue in project.issues.all %}
+              <li><span class='issue_status'>({{ issue.get_status_display }})</span> <a href="{{ issue.get_absolute_url }}">{{ issue }}</a></li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>暂无问题/Bug报告</p>
+            {% endif %}
+        </div>
+
+        <div id="milestones">
+            <h2><a href="{% url 'milestone_list' project.slug %}">里程碑</a></h2>
+            {% if project.milestone_set.all %}
+            <ul>
+            {% for milestone in project.milestone_set.all %}
+              <li><a href="{{ milestone.get_absolute_url }}">{{ milestone }}</a></li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>暂无需要处理的里程碑.</p>
+            {% endif %}
+        </div>
+
+        <div id="timeline">
+            <h2><a href="{% url 'timeline_list' project.slug %}">时间线</a></h2>
+            {% for event in project.timeline_set.all %}
+            <p>{{ event.date|date:'Y-m-d H:i' }} <a href="{{ event.content_object.get_absolute_url }}">{{ event.content_object }}</a>  {{ event.description|safe }} </p>
+            {% endfor %}
+        </div>
+
+        <div id="members">
+            <h2><a href="{% url 'member_list' project.slug %}">项目成员</a></h2>
+            {% if project.members.count %}
+            <ul>
+            {% for member in project.members.all %}
+            <li><a href="{{ member.get_absolute_url }}">{{ member.username }}</a></li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>该项目暂无成员</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock article_content %}
+
+{% block js.extra %}
+
+{% endblock js.extra %}

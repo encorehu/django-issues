@@ -1,0 +1,17 @@
+{% extends 'issues/base_project.html' %}
+
+{% block article_content %}
+<h2>Submit an Issue</h2>
+<form action="" method="post">{% csrf_token %}
+<dl>
+<dt>{{ form.summary.label_tag }}:</dt>
+{% if form.summary.errors %}<dd class="error">{{ form.summary.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.summary }}</dd>
+<dt>{{ form.description.label_tag }}:</dt>
+{% if form.description.errors %}<dd class="error">{{ form.description.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.description }}</dd>
+
+</dl>
+<input type="submit" value="Submit" />
+</form>
+{% endblock article_content %}

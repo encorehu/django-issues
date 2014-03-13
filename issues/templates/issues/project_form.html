@@ -1,0 +1,47 @@
+{% extends 'issues/base_project.html' %}
+
+{% block title %}Create a New Project{% endblock title %}
+
+
+{% block rss.custom %}
+<link href="{{ STATIC_URL }}css/issues.css?v=20120124" rel="stylesheet" type="text/css" />
+{% endblock rss.custom%}
+
+{% block current_position %}
+&raquo;<a href="{% url 'create_project' %}">创建新项目</a>
+{% endblock%}
+
+{% block content %}
+<div id="content">
+
+	<div id="newsLists">
+        <h1>创建新项目</h1>
+        {% if form.errors %}
+        {{ form.non_field_errors }}
+        {% endif %}
+        <form action="" method="post"> {% csrf_token %}
+        <dl>
+
+        <dt>项目标题(必填, 可填中文):</dt>
+        {% if form.title.errors %}<dd class="error">{{ form.title.errors|join:", " }}</dd>{% endif %}
+        <dd>{{ form.title }}</dd>
+
+        <dt>项目缩写短语(必填, 填项目标题的英文或拼音即可):</dt>
+        {% if form.slug.errors %}<dd class="error">{{ form.slug.errors|join:", " }}</dd>{% endif %}
+        <dd>{{ form.slug }}</dd>
+
+        <dt>项目是否公开?(公开则不登录查看状态, 不公开则需要登录)</dt>
+        <dd>{{ form.private }}</dd>
+        <dd>默认不公开, 公开请打勾</dd>
+
+        <dt>备注</dt>
+        {% if form.msg.errors %}<dd class="error">{{ form.msg.errors|join:", " }}</dd>{% endif %}
+        <dd>{{ form.msg }}</dd>
+        </dl>
+        <div><input type="submit" value="创建新项目" /></div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock content %}

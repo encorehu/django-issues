@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Issue Search</h2>
+    
+    <form action="" method="POST">
+    <table>
+    {{ form }}
+    </table>
+    <input type="submit" value="Submit" />
+    </form>
+    
+    {% if issues %}
+    <ul>
+    {% for issue in issues %}
+    <li>{{ issue.pk }} {{ issue.title }} {{ issue.status }} {{ issue.description|truncatewords:10 }} {{ issue.creator }} {{ issue.owner }} {{ issue.urgency }} {{ issue.importance }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'issues/base_project.html' %}
+
+{% block content %}
+<h2>Add a Milestone</h2>
+<form action="" method="post">{% csrf_token %}
+<dl>
+<dt>{{ form.title.label_tag }}</dt>
+{% if form.title.errors %}<dd class="error">{{ form.title.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.title }}</dd>
+<dt>{{ form.description.label_tag }}</dt>
+{% if form.description.errors %}<dd class="error">{{ form.description.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.description }}</dd>
+<dt>{{ form.date_due.label_tag }}</dt>
+{% if form.date_due.errors %}<dd>{{ form.date_due.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.date_due }}</dd>
+
+<dt>{{ form.msg.label_tag }}:</dt>
+{% if form.msg.errors %}<dd class="error">{{ form.msg.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.msg }}</dd>
+<dd>{{ form.msg.help_text }}</dd>
+
+</dl>
+<input type="submit" value="Submit" />
+</form>
+{% endblock content %}

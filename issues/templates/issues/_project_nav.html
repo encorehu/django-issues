@@ -1,0 +1,8 @@
+<div class="subTitle">
+    <ul id="project_nav">
+        <li><a href="{% url 'issue_list' project.slug %}">{{ project.issue_alias }}列表</a> (<a href="{% url 'create_issue' project.slug %}">提交Issue</a>)</li>
+        <li><a href="{% url 'milestone_list' project.slug %}">里程碑</a></li>
+        <li><a href="{% url 'timeline_list' project.slug %}">时间线</a></li>
+        <li><a href="{% url 'member_list' project.slug %}">成员</a></li>
+    </ul>
+</div>

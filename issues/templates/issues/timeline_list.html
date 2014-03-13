@@ -1,0 +1,14 @@
+{% extends 'issues/base_project.html' %}
+
+{% block title %}{{ project }} Timeline{% endblock title %}
+
+{% block article_content %}
+<h2>Timeline</h2>
+{% for event in object_list %}
+<p>{{ event.date|date:"Y-m-d H:i" }} <a href="{{ event.content_object.get_absolute_url }}">{{ event.content_object }}</a> {{ event.description }} </p>
+{% endfor %}
+{% endblock article_content %}
+
+{% block pagination_nav %}
+{% with events as objects %}{% include 'issues/_pagination_nav.html' %}{% endwith %}
+{% endblock %}

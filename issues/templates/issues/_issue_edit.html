@@ -1,0 +1,53 @@
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% if form.errors %}
+{{form.errors}}
+{{ form.non_field_errors }}
+{% endif %}
+<form action="" method="post">{% csrf_token %}
+<dl>
+<dt>{{ form.summary.label_tag }}:</dt>
+{% if form.summary.errors %}<dd class="error">{{ form.summary.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.summary }}</dd>
+
+<dt>{{ form.description.label_tag }}:</dt>
+{% if form.description.errors %}<dd class="error">{{ form.description.errors|join:", "}}</dd>{% endif %}
+<dd>{{ form.description }}</dd>
+
+<dt>{{ form.date_due.label_tag }}:</dt>
+{% if form.date_due.errors %}<dd class="error">{{ form.date_due.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.date_due }}</dd>
+
+<dt>{{ form.milestone.label_tag }}:</dt>
+{% if form.milestone.errors %}<dd class="error">{{ form.milestone.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.milestone }}</dd>
+
+<dt>{{ form.status.label_tag }}:</dt>
+{% if form.status.errors %}<dd class="error">{{ form.status.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.status }}</dd>
+
+<dt>{{ form.finished.label_tag }}:</dt>
+{% if form.finished.errors %}<dd class="error">{{ form.finished.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.finished }}</dd>
+
+<dt>{{ form.priority.label_tag }}:</dt>
+{% if form.priority.errors %}<dd class="error">{{ form.priority.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.priority }}</dd>
+
+<dt>{{ form.owners.label_tag }}:</dt>
+{% if form.owners.errors %}<dd class="error">{{ form.owners.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.owners }}</dd>
+<dd>{{ form.owners.help_text }}</dd>
+
+<dt>{{ form.msg.label_tag }}:</dt>
+{% if form.msg.errors %}<dd class="error">{{ form.msg.errors|join:", " }}</dd>{% endif %}
+<dd>{{ form.msg }}</dd>
+<dd>{{ form.msg.help_text }}</dd>
+</dl>
+<input type="submit" value="Update" />
+</form>

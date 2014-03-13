@@ -1,0 +1,41 @@
+{% extends 'issues/base_project.html' %}
+
+{% block title %}{{ project }} - Open Issues{% endblock title %}
+
+{% block article_content %}
+<h2>查看{{ project.issue_alias }}</h2>
+<p><a href="{% url 'create_issue' project.slug %}">提交{{ project.issue_alias }}</a></p>
+
+{% if object_list %}
+<table class='data'>
+<tr>
+	<th width='300'>问题摘要</th>
+	<td width='70'>状态</td>
+	<td width='60'></td>
+	<td width='60'></td>
+	{%comment%}<td>描述</td>{%endcomment%}
+	<td width='60'>提交人</td>
+	<td width='120'>提交时间</td>
+</tr>
+
+{% for issue in object_list %}
+<tr>
+	<th><a href="{{ issue.get_absolute_url }}">{{ issue }}</a></th>
+	<td>{{ issue.get_status_display }}</td>
+	<td>{% if issue.urgency %}<dt>{{ issue.urgency }}</dt>{% endif %}</td>
+	<td>{% if issue.importance %}<dt>{{ issue.importance }}</dt>{% endif %}</td>
+	{%comment%}<td>{{ issue.description|truncatewords:10 }}</td>{%endcomment%}
+	<td><a href="{{ issue.creator.get_absolute_url }}">{{ issue.creator }}</a></td>
+	<td>{{ issue.date_added|date:'Y-m-d H:i' }}</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<p>该项目暂无{{ project.issue_alias }}</p>
+{% endif %}
+
+{% endblock %}
+
+{% block pagination_nav %}
+{% with issues as objects %} {% endwith %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'issues/base_project.html' %}
+
+{% block article_content %}
+{% if form %}
+    {% include 'issues/_issue_edit.html' %}
+{% else %}
+	<h2>Issue: {{ issue }} ( <a href="{% url 'issue_edit' project.slug issue.pk %}" title="">编辑</a> )</h2>
+	<ul>
+		<li>创建时间: {{ issue.date_added|timesince }}前, 由 <a href="{{ issue.creator.get_absolute_url }}">{{ issue.creator }}</a> 创建</li>
+		<li>上次更新: {{ issue.date_modified|timesince }} ago</li>
+		{% if issue.milestone %}<li>里程碑: {{ issue.milestone }}</li>{% endif %}
+		{% if issue.date_due %}<li>到期时间: {{ issue.date_due|timeuntil }}</li>{% endif %}
+		{% if issue.date_completed %}<li>解决时间: {{ issue.date_completed|timeuntil }}</li>{% endif %}
+		<li>当前状态: {{ issue.status }}</li>
+	</ul>
+    <h3>描述:</h3>
+    <pre>{{ issue.description }}</pre>
+    <h3>所有者:</h3>
+    {% if issue.owners.all %}
+	    <ul>
+	    {% for owner in issue.owners.all %}
+	        <li><a href="{{ owner.get_absolute_url }}">{{ owner }}</a></li>
+	    {% endfor %}
+	    </ul>
+    {% else %}
+        <p>这个Issue还未指派负责人.</p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
+
+{% block js.extra %}
+
+
+{% endblock js.extra %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block css.custom %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/index.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/issues.css?v=20120124" />
+{% endblock css.custom%}
+
+{% block content %}
+<div id="content">
+	<a href="/">首页</a>
+    &raquo;<a href="{% url 'project_list' %}">项目管理</a>
+    {% block current_position %}
+    &raquo;<a href="{{ project.get_absolute_url }}">{{ project }}</a>
+    {% endblock%}
+	<div id="newsmenu">
+		{% block project_nav %}{%include 'issues/_project_nav.html'%}
+        {% endblock project_nav %}
+	</div>
+
+	<div id="newsLists">
+	    <div class="newslist">
+        {% block article_content %}
+        {% endblock article_content %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

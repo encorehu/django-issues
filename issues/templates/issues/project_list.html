@@ -1,0 +1,39 @@
+{% extends 'issues/base_project.html' %}
+
+{% block title %}Browse Projects{% endblock title %}
+
+
+{% block rss.custom %}
+<link href="{{ STATIC_URL }}css/issues.css?v=20120124" rel="stylesheet" type="text/css" />
+{% endblock rss.custom%}
+{% block breadcrumbs %}<a href="/">首页</a> &raquo;<a href="{% url 'project_list' %}">项目管理</a> &raquo; 浏览项目{% endblock %}
+
+{% block content %}
+<div id="content">
+	<div id="newsmenu">
+		<div class="title"><a name="#1" id="1"></a><span class="leftBorder"></span><span class="midBlock"></span><span class="rightBorder"></span></div>
+		<div class="subTitle"><div id="loading" style="float:left;display:none; background-color:#FF0000; line-height:100%; height:10px;" ><font color="#FF9900">LOADING....</font></div></div>
+	</div>
+	<h1>项目列表(<a href="{% url 'create_project' %}">创建新项目</a>)</h1>
+
+	<div id="newsLists">
+	    <div class="newslist">
+        {% if object_list %}
+        {% for project in object_list %}
+        <h2><a href="{{ project.get_absolute_url }}">{{ project }}</a><small>(进度{{project.percent_finished}}%)</small></h2>
+        <ul>
+        <li><a href="{% url 'issue_list' project.slug %}">{{ project.issues.count }} {{ project.issue_alias }}</a>, <a href="{% url 'member_list' project.slug %}">{{ project.members.count }} 成员</a>,
+             <a href="{{ project.creator.get_absolute_url }}">{{ project.creator }}</a>  创建于 {{ project.date_added|date:"Y-m-d f" }}</li>
+        </ul>
+        {% endfor %}
+        {% else %}
+        <h2>现在没有项目(<a href="{% url 'create_project' %}">创建新项目</a>)</h2>
+        {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
+
+{% block pagination_nav %}
+{% endblock %}

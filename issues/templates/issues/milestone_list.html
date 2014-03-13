@@ -1,0 +1,18 @@
+{% extends 'issues/base_project.html' %}
+
+{% block article_content %}
+<h2>Milestones</h2>
+{% if milestones.object_list %}
+{% for milestone in milestones.object_list %}
+<h3><a href="{{ milestone.get_absolute_url }}">{{ milestone }}</a></h3>
+<p>{{ milestone.description|truncatewords:15 }}{% if milestone.issue_set.count %} ({{ milestone.issue_set.count }} issue{{ milestone.issue_set.count|pluralize }}){% endif %}</p>
+{% endfor %}
+{% else %}
+<p>There are no pending milestones at this time.</p>
+{% endif %}
+<p><a href="{% url 'create_milestone' project.slug %}">Add a milestone</a></p>
+{% endblock %}
+
+{% block pagination_nav %}
+{% with milestones as objects %}{% include 'issues/_pagination_nav.html' %}{% endwith %}
+{% endblock %}

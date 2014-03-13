@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block js %}
+    <script src="http://www.google.com/jsapi"></script>
+    <script>
+        google.load("jquery", "1");
+        google.load("jqueryui", "1");
+    </script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/js/triage-sort.js"></script>
+{% endblock js %}
+
+{% block content %}
+    <h2>Issues Triage List</h2>
+    
+    <form method="post" action="">{% csrf_token %}
+        <div>{{ formset.management_form }}
+        <table class="orderable">
+            <thead>
+                <tr><td class="order">Order</td><td>#</td><td>Title</td><td>Owner</td><td>Creator</td><td>Status</td><td>Urgency</td><td>Importance</td><td>Date Due</td><td>Date Completed</td><td>Visible</td></tr>
+            </thead>
+            <tbody id="sortableIssues">
+            {% for form in formset.forms %}
+            <tr> <td class="order">{{ form.order }}</td> <td>{{ form.id }}</td><td>{{ form.title }}</td> <td>{{ form.owner }}</td> <td>{{ form.creator }}</td> <td>{{ form.status }}</td><td>{{ form.urgency }}</td><td>{{ form.importance }}</td><td>{{ form.date_due }}</td><td>{{ form.date_completed }}</td><td>{{ form.visible }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" /></div>
+    </form>
+    
+{% endblock content %}

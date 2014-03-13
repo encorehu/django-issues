@@ -1,0 +1,12 @@
+{% extends 'issues/base_project.html' %}
+
+{% block title %}{{ project }} Members{% endblock title %}
+
+{% block article_content %}
+<h2>[{{ project }}]项目的成员</h2>
+{% for member in members.object_list %}
+<h3><a href="{{ member.user.get_absolute_url }}">{{ member.user.username }}</a></h3>
+<p>加入时间: {{ member.joined_at|date:"Y-m-d" }}</p>
+{% endfor %}
+{% ifequal user project.creator %}<a href="{% url 'add_members' project.slug %}">添加新成员</a>{% endifequal %}
+{% endblock %}
