@@ -123,7 +123,7 @@ class IssueCreateView(LoginRequiredMixin, ProjectMixin, CreateView):
         return reverse('issue_list', kwargs={'project_slug': self.project.slug})
 
     def form_valid(self, form):
-        redirect = super(IssueUpdateView,self).form_valid(form)
+        redirect = super(IssueCreateView,self).form_valid(form)
         kwargs = {}
         kwargs['instance']   = self.object
         kwargs['created']    = True
