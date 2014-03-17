@@ -10,7 +10,7 @@
 
 {% block content %}
     <h2>Issues Triage List</h2>
-    
+
     <form method="post" action="">{% csrf_token %}
         <div>{{ formset.management_form }}
         <table class="orderable">
@@ -25,5 +25,5 @@
         </table>
         <input type="submit" /></div>
     </form>
-    
+
 {% endblock content %}

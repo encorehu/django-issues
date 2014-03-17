@@ -2,14 +2,14 @@
 
 {% block content %}
     <h2>Issue Search</h2>
-    
+
     <form action="" method="POST">
     <table>
     {{ form }}
     </table>
     <input type="submit" value="Submit" />
     </form>
-    
+
     {% if issues %}
     <ul>
     {% for issue in issues %}
@@ -17,5 +17,5 @@
     {% endfor %}
     </ul>
     {% endif %}
-    
+
 {% endblock %}
